@@ -40,6 +40,13 @@ module.exports = class Product {
     return getProductFromFile(cb);
   }
 
+  static findById(id, cb) {
+    getProductFromFile((products) => {
+      const product = products.find((p) => p.id === id);
+      cb(product);
+    });
+  }
+
   // -- I do this.
 
   static update(id, data) {
@@ -51,12 +58,6 @@ module.exports = class Product {
       fs.writeFile(p, JSON.stringify(products), (err) => {
         if (err) console.log(err);
       });
-    });
-  }
-
-  static fetchById(id, cb) {
-    getProductFromFile((products) => {
-      cb(products.find((item) => item.id === Number(id)));
     });
   }
 }

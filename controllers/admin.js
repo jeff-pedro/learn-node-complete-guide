@@ -30,8 +30,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
   const { id } = req.params;
-  Product.fetchById(id, (product) => {
-    console.log(product);
+  Product.findById(id, (product) => {
     res.render('admin/edit-product', {
       pageTitle: 'Edit Product',
       path: '',
