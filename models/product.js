@@ -38,4 +38,24 @@ module.exports = class Product {
   static fetchAll(cb) {
     return getProductFromFile(cb);
   }
+
+  // -- I do this.
+
+  static update(id, data) {
+    getProductFromFile((products) => {
+      const productIndex = products.findIndex((product) => product.id === Number(id));
+      products.pop(productIndex);
+      products.push({ id: Number(id), ...data });
+
+      fs.writeFile(p, JSON.stringify(products), (err) => {
+        if (err) console.log(err);
+      });
+    });
+  }
+
+  static fetchById(id, cb) {
+    getProductFromFile((products) => {
+      cb(products.find((item) => item.id === Number(id)));
+    });
+  }
 }

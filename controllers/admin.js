@@ -27,3 +27,23 @@ exports.getProducts = (req, res, next) => {
     });
   });
 }
+
+exports.getEditProduct = (req, res, next) => {
+  const { id } = req.params;
+  Product.fetchById(id, (product) => {
+    console.log(product);
+    res.render('admin/edit-product', {
+      pageTitle: 'Edit Product',
+      path: '',
+      product: product
+    });
+  });
+}
+
+exports.updateProduct = (req, res, next) => {
+  const { id } = req.params;
+  const newData = req.body;
+  console.log(newData);
+  Product.update(id, newData);
+  res.redirect('/admin/products');
+}
