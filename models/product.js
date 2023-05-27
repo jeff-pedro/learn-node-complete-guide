@@ -18,7 +18,8 @@ const getProductFromFile = (cb) => {
 }
 
 module.exports = class Product {
-  constructor(title, imageUrl, price, description) {
+  constructor(id, title, imageUrl, price, description) {
+    this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
     this.price = price;
@@ -26,15 +27,38 @@ module.exports = class Product {
   }
 
   save() {
-    this.id = Math.round(Math.random() * 100).toString();
     getProductFromFile((products) => {
-      products.push(this);
+      if (this.id) {
+        const existingProductIndex = products.findIndex(product => product.id === this.id);
+        const updateProduct = [...products];
+        updateProduct[existingProductIndex] = this;
 
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        if (err) console.log(err);
-      });
+        fs.writeFile(p, JSON.stringify(updateProduct), (err) => {
+          if (err) console.log(err);
+        });
+      } else {
+        this.id = Math.round(Math.random() * 100).toString();
+        products.push(this);
+
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+          if (err) console.log(err);
+        });
+      }
     });
   }
+
+  // static update(id, data) {
+  //   getProductFromFile((products) => {
+  //     const productIndex = products.findIndex((product) => product.id === Number(id));
+  //     products.pop(productIndex);
+  //     products.push({ id: Number(id), ...data });
+
+  //     fs.writeFile(p, JSON.stringify(products), (err) => {
+  //       if (err) console.log(err);
+  //     });
+  //   });
+  // }
+
 
   static fetchAll(cb) {
     return getProductFromFile(cb);
@@ -44,20 +68,6 @@ module.exports = class Product {
     getProductFromFile((products) => {
       const product = products.find((p) => p.id === id);
       cb(product);
-    });
-  }
-
-  // -- I do this.
-
-  static update(id, data) {
-    getProductFromFile((products) => {
-      const productIndex = products.findIndex((product) => product.id === Number(id));
-      products.pop(productIndex);
-      products.push({ id: Number(id), ...data });
-
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        if (err) console.log(err);
-      });
     });
   }
 }
