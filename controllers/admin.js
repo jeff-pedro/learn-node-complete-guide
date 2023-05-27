@@ -41,6 +41,13 @@ exports.getEditProduct = (req, res, next) => {
   });
 }
 
+exports.postEditProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  const newData = req.body;
+  Product.update(prodId, newData);
+  res.redirect('/admin/products');
+}
+
 exports.getProducts = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render('admin/products', {
@@ -49,12 +56,4 @@ exports.getProducts = (req, res, next) => {
       products: products
     });
   });
-}
-
-exports.updateProduct = (req, res, next) => {
-  const { id } = req.params;
-  const newData = req.body;
-  console.log(newData);
-  Product.update(id, newData);
-  res.redirect('/admin/products');
 }
