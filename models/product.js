@@ -47,18 +47,14 @@ module.exports = class Product {
     });
   }
 
-  // static update(id, data) {
-  //   getProductFromFile((products) => {
-  //     const productIndex = products.findIndex((product) => product.id === Number(id));
-  //     products.pop(productIndex);
-  //     products.push({ id: Number(id), ...data });
-
-  //     fs.writeFile(p, JSON.stringify(products), (err) => {
-  //       if (err) console.log(err);
-  //     });
-  //   });
-  // }
-
+  static delete(id) {
+    getProductFromFile((products) => {
+      const updateProduct = products.filter((product) => product.id !== id);
+      fs.writeFile(p,JSON.stringify(updateProduct), (err) => {
+        console.log(err);
+      });
+    });
+  }
 
   static fetchAll(cb) {
     return getProductFromFile(cb);
