@@ -12,3 +12,9 @@
 
 ### Resources
 * [More on MVC](https://developer.mozilla.org/en-US/docs/Web/Apps/Fundamentals/Modern_web_app_architecture/MVC_architecture)
+
+
+# 8. Dynamic Routes and Advanced Models
+
+### Resources
+* [Express Routing Docs](https://expressjs.com/en/guide/routing.html)
