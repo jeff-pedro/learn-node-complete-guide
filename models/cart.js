@@ -48,6 +48,11 @@ module.exports = class Cart {
 
             const updateCart = { ...cart };
             const product = updateCart.products.find(prod => prod.id === id);
+
+            if (!product) {
+                return;
+            }
+
             const productQty = product.qty;
             // Remove product
             updateCart.products = updateCart.products.filter(prod => prod.id !== id);
@@ -59,13 +64,13 @@ module.exports = class Cart {
             });
         });
     }
-    
+
     static getCart(cb) {
         fs.readFile(p, (err, fileContent) => {
-            const cart = JSON.parse(fileContent);
             if (err) {
                 cb(null);
             } else {
+                const cart = JSON.parse(fileContent);
                 cb(cart);
             }
         });
