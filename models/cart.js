@@ -51,7 +51,7 @@ module.exports = class Cart {
             const productQty = product.qty;
             // Remove product
             updateCart.products = updateCart.products.filter(prod => prod.id !== id);
-            // Decrease of total price  
+            // Decrease from total price  
             updateCart.totalPrice = updateCart.totalPrice - productPrice * productQty;
 
             fs.writeFile(p, JSON.stringify(updateCart), (err) => {
