@@ -22,7 +22,7 @@
 ### Explored
 * How to pass _dynamic path segments_ to the Express route path. (`path`**`:<param>`)**
 * Extract this data via _request parameters_. (`req.params`)
-* Gather parameters passed to URL (http://path/**`?param1=value1&param2=value2`**)
+* Gather parameters passed to URL (`http://path/`**`?param1=value1&param2=value2`**)
 * and use it through Express query parameters (`req.query.`**`<params>`**)
 * Work with files for data storage.
 
