@@ -9,19 +9,21 @@ exports.getProducts = (req, res, next) => {
         pageTitle: 'All Products',
         path: '/products'
       });
-    });
-
+    })
+    .catch(err => console.log(err));
 }
 
 exports.getProduct = (req, res, next) => {
   const productId = req.params.productId;
-  Product.findById(productId, (product) => {
-    res.render('shop/product-detail', {
-      product: product,
-      pageTitle: 'Details',
-      path: '/products',
+  Product.findById(productId)
+    .then(([product]) => {
+      res.render('shop/product-detail', {
+        product: product[0],
+        pageTitle: 'Details',
+        path: '/products',
+      });
     })
-  });
+    .catch(err => console.log(err));
 }
 
 exports.getIndex = (req, res, next) => {
@@ -32,7 +34,8 @@ exports.getIndex = (req, res, next) => {
         pageTitle: 'Shop',
         path: '/'
       });
-    });
+    })
+    .catch(err => console.log(err));
 }
 
 exports.getCart = (req, res, next) => {
