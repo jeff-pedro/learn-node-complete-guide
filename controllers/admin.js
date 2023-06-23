@@ -10,13 +10,18 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
   const price = req.body.price;
+  const imageUrl = req.body.imageUrl;
   const description = req.body.description;
 
-  Product.create({ title, price, imageUrl, description })
+  req.user.createProduct({
+    title,
+    price,
+    imageUrl,
+    description
+  })
     .then(result => {
-      // console.log(result);
+      console.log(result);
       console.log('Created Product');
       res.redirect('/admin/products')
     })
@@ -97,14 +102,14 @@ exports.getProducts = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findByPk(prodId)
-  .then(product => {
-    return product.destroy();
-  })
-  .then(result => {
-    console.log('DESTROYED PRODUCT');
-    res.redirect('/admin/products');
-  })
-  .catch(err => console.log(err));
+    .then(product => {
+      return product.destroy();
+    })
+    .then(result => {
+      console.log('DESTROYED PRODUCT');
+      res.redirect('/admin/products');
+    })
+    .catch(err => console.log(err));
 
   // Product.destroy({ where: { id: prodId } })
   //   .then(() => res.redirect('/admin/products'))
