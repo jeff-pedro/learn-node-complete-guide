@@ -56,7 +56,7 @@ sequelize
     return user;
   })
   .then(user => {
-    user.createCart();
+    return user.createCart();
   })
   .then(() => {
     app.listen(3000);
