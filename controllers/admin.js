@@ -95,6 +95,7 @@ exports.getProducts = (req, res, next) => {
     .getProducts()
     .then(products => {
       res.render('admin/products', {
+        pageTitle: 'Admin Products',
         path: '/admin/products',
         products: products
       });
