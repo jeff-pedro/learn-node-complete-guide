@@ -129,3 +129,39 @@ exports.getCheckout = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
   res.render('shop/orders', { pageTitle: 'Orders', path: '/orders' })
 }
+
+// I DID THIS IMPLEMENTATION!
+exports.postOrders = (req, res, next) => {
+  const cartProducts = req.user
+    .getCart()
+    .then(cart => {
+      return cart.getProducts();
+    })
+    .catch(err => console.log());
+
+  req.user
+    .createOrder()
+    .then(order => {
+      cartProducts
+        .then(products => {
+          for (let product of products) {
+            const productQty = product.cartItem.quantity;
+            order.addProduct(product, {
+              through: { quantity: productQty }
+            });
+          }
+        })
+        .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err));
+
+  // req.user
+  //   .getCart()
+  //     .then(cart => {
+  //       return cart.getProducts();
+  //     })
+  //     .then(products => {
+
+  //     })
+  //     .catch(err => console.log(err));
+}
