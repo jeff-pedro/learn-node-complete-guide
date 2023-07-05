@@ -72,3 +72,16 @@
 * Add products to cart
 * Create orders with cart-related products
 * Store all data to a SQL database
+
+
+# 11. NoSQL
+
+### Resources
+* 
+
+### Explored
+* Setup MongoDB driver
+* 
+
+### Features
+* 
