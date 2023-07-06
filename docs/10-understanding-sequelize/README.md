@@ -1,4 +1,4 @@
-# 10. Understanding Sequelize
+# 10. [Understanding Sequelize](https://github.com/jeff-pedro/learn-node-complete-guide/tree/10-sequelize)
 
 ### Resources
 * [Sequelize Official Docs](https://sequelize.org/)

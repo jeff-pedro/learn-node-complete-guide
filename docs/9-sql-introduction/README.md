@@ -1,4 +1,4 @@
-# 9. SQL Introduction
+# 9. [SQL Introduction](https://github.com/jeff-pedro/learn-node-complete-guide/tree/09-sql)
 
 ### Resources
 * [To Learn about MySQL](https://www.w3schools.com/sql/)

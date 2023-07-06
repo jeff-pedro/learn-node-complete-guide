@@ -1,4 +1,4 @@
-# 8. Dynamic Routes and Advanced Models
+# 8. [Dynamic Routes and Advanced Models](https://github.com/jeff-pedro/learn-node-complete-guide/tree/08-dynamic-routes)
 
 ### Resources
 * [Express Routing Docs](https://expressjs.com/en/guide/routing.html)
