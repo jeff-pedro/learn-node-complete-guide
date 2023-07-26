@@ -3,23 +3,24 @@ const MongoClient = mongodb.MongoClient;
 
 let _db;
 
-const mongoConnect = () => {
-    MongoClient.connect('mongodb://127.0.0.1:27017/node-complete')
+const mongoConnect = (callback) => {
+  MongoClient.connect('mongodb://127.0.0.1:27017/node-complete')
     .then(client => {
-        console.log('Connected!');
-        _db = client.db();
+      console.log('Connected!');
+      _db = client.db();
+      callback();
     })
     .catch(err => {
-        console.log(err)
-        throw err;
+      console.log(err)
+      throw err;
     });
 }
 
 const getDb = () => {
-    if (_db) {
-        return _db;
-    }
-    throw 'No database found!';
+  if (_db) {
+    return _db;
+  }
+  throw 'No database found!';
 }
 
 exports.mongoConnect = mongoConnect;
