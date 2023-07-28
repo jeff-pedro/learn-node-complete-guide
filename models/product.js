@@ -7,19 +7,22 @@ class Product {
     this.price = price;
     this.imageUrl = imageUrl;
     this.description = description;
-    this._id = id;
+    this._id = new ObjectId(id);
   }
 
   save() {
     const db = getDb();
     let dbOp;
 
+    console.log(this._id);
+
     if (this._id) {
       // Update the product
       dbOp = db
         .collection('products')
-        .updateOne({ _id: new ObjectId(this._id) }, { $set: this });
+        .updateOne({ _id: this._id }, { $set: this });
     } else {
+      // Create the product
       dbOp = db
         .collection('products')
         .insertOne(this);
