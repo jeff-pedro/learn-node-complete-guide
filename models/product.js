@@ -7,14 +7,12 @@ class Product {
     this.price = price;
     this.imageUrl = imageUrl;
     this.description = description;
-    this._id = new ObjectId(id);
+    this._id = id ? new ObjectId(id) : null;
   }
 
   save() {
     const db = getDb();
     let dbOp;
-
-    console.log(this._id);
 
     if (this._id) {
       // Update the product
@@ -70,8 +68,7 @@ class Product {
       .collection('products')
       .deleteOne({ _id: new ObjectId(prodId) })
       .then(result => {
-        console.log(result);
-        return;
+        return result;
       })
       .catch(err => {
         console.log(err);
