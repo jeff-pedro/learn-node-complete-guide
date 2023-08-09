@@ -22,28 +22,33 @@ class User {
   }
 
   addToCart(product) {
-
-    let cartProductIndex;
-    let updatedCart;
-
-    if (this.cart === null) {
+    if (!this.cart) {
       this.cart = { items: [] };
     }
 
-    cartProductIndex = this.cart.items.findIndex(cp => {
+    const cartProductIndex = this.cart.items.findIndex(cp => {
       return cp.productId.toString() === product._id.toString();
     });
-    
+
+    let newQuantity = 1;
+    const updatedCartItems = [...this.cart.items];
+
     if (cartProductIndex >= 0) {
-      this.cart.items[cartProductIndex].quantity += 1;
-      updatedCart = this.cart
+      newQuantity = this.cart.items[cartProductIndex].quantity + 1;
+      updatedCartItems[cartProductIndex].quantity = newQuantity;
     } else {
-      this.cart.items.push({ productId: new ObjectId(product._id), quantity: 1 });
-      updatedCart = this.cart
-      console.log(updatedCart);
+      updatedCartItems.push({
+        productId: new ObjectId(product._id),
+        quantity: newQuantity
+      });
     }
 
+    const updatedCart = {
+      items: updatedCartItems
+    };
+
     const db = getDb();
+    
     return db
       .collection('users')
       .updateOne(
