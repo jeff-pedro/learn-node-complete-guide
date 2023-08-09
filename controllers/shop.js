@@ -40,8 +40,8 @@ exports.getIndex = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-  let fetchedCart;
-  console.log(req.user.cart);
+  // let fetchedCart;
+  
   // req.user.getCart()
   //   .then(cart => {
   //     fetchedCart = cart;
@@ -82,7 +82,7 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-      console.log(result);
+      // console.log(result);
     })
     .catch(err => console.log(err));
 

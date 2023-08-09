@@ -8,7 +8,7 @@ const mongoConnect = require('./util/database').mongoConnect;
 const User = require('./models/user');
 
 const app = express();
-let user; //
+let user; // I did
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  User.findById("64d28f29b99f65c9165489c6")
+  User.findById("64d3a95350f391bedfa5e66d")
     .then(user => {
       req.user = new User(user.name, user.email, user.cart, user._id);
       next();
@@ -34,7 +34,8 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 mongoConnect(() => {
-  // const user = new User('admin', 123);
+
+  // user = new User('admin', 123);
   // user.save();
 
   app.listen(3000);
