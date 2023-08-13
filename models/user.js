@@ -57,17 +57,23 @@ class User {
       );
   }
 
-  removeFromCart(productId) {
-    const prodIndex = this.cart.items.findIndex(p => {
+  deleteItemFromCart(productId) {
+    const updatedCartItems = [...this.cart.items];
+    
+    const prodIndex = updatedCartItems.findIndex(p => {
       return (p.productId.toString() === productId);
     });
 
-    this.cart.items.splice(prodIndex);
+    updatedCartItems.splice(prodIndex);
+
+    const updatedCart = {
+      items: updatedCartItems
+    }
 
     const db = getDb();
     return db
       .collection('users')
-      .updateOne({ _id: this._id }, { $set: { cart: this.cart } })
+      .updateOne({ _id: this._id }, { $set: { cart: updatedCart } })
       .then(result => {
         return;
       })
