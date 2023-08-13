@@ -57,14 +57,19 @@ class User {
       );
   }
 
-  static findById(userId) {
-    const db = getDb();
+  removeFromCart(productId) {
+    const prodIndex = this.cart.items.findIndex(p => {
+      return (p.productId.toString() === productId);
+    });
 
+    this.cart.items.splice(prodIndex);
+
+    const db = getDb();
     return db
       .collection('users')
-      .findOne({ _id: new ObjectId(userId) })
-      .then(user => {
-        return user;
+      .updateOne({ _id: this._id }, { $set: { cart: this.cart } })
+      .then(result => {
+        return;
       })
       .catch(err => console.log(err));
   }
@@ -89,6 +94,18 @@ class User {
             }).quantity
           };
         });
+      })
+      .catch(err => console.log(err));
+  }
+
+  static findById(userId) {
+    const db = getDb();
+
+    return db
+      .collection('users')
+      .findOne({ _id: new ObjectId(userId) })
+      .then(user => {
+        return user;
       })
       .catch(err => console.log(err));
   }
