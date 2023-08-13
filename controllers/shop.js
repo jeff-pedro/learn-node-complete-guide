@@ -71,25 +71,9 @@ exports.postCartDeleteProduct = (req, res, next) => {
   req.user
     .deleteItemFromCart(prodId)
     .then(() => {
-      console.log(`Product id:${prodId} was removed!`);
       res.redirect('/cart');
     })
     .catch(err => console.log(err));
-
-
-  // req.user
-  //   .getCart()
-  //   .then(cart => {
-  //     return cart.getProducts({ where: { id: prodId } })
-  //   })
-  //   .then(products => {
-  //     let product = products[0];
-  //     return product.cartItem.destroy();
-  //   })
-  //   .then(() => {
-  //     res.redirect('/cart');
-  //   })
-  //   .catch(err => console.log(err));
 }
 
 exports.getOrders = (req, res, next) => {
