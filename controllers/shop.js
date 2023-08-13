@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const User = require('../models/user');
 // const Order = require('../models/order');
 
 exports.getProducts = (req, res, next) => {
@@ -40,38 +41,31 @@ exports.getIndex = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-  // let fetchedCart;
-  
-  // req.user.getCart()
-  //   .then(cart => {
-  //     fetchedCart = cart;
-  //     return cart.getProducts()
-  //       .then(products => {
-  //         res.render('shop/cart', {
-  //           pageTitle: 'Your Cart',
-  //           path: '/cart',
-  //           products: products
-  //         });
-  //       })
-  //       .catch(err => console.log(err));
-  //   })
-  //   .catch(err => console.log(err));
+  req.user.getCart()
+    .then(products => {
+      res.render('shop/cart', {
+        pageTitle: 'Your Cart',
+        path: '/cart',
+        products: products
+      });
+    })
+    .catch(err => console.log(err));
 
-  // let fetchedCart;
+  //   // let fetchedCart;
   // req.user.getCart()
-  //   .then(cart => {
-  //     fetchedCart = cart;
-  //     return cart.getProducts()
-  //       .then(products => {
-  //         res.render('shop/cart', {
-  //           pageTitle: 'Your Cart',
-  //           path: '/cart',
-  //           products: products
-  //         });
-  //       })
-  //       .catch(err => console.log(err));
-  //   })
-  //   .catch(err => console.log(err));
+  // .then(cart => {
+  //   // fetchedCart = cart;
+  //   return cart.getProducts()
+  //     .then(products => {
+  //       res.render('shop/cart', {
+  //         pageTitle: 'Your Cart',
+  //         path: '/cart',
+  //         products: products
+  //       });
+  //     })
+  //     .catch(err => console.log(err));
+  // })
+  // .catch(err => console.log(err));
 }
 
 exports.postCart = (req, res, next) => {
@@ -81,8 +75,8 @@ exports.postCart = (req, res, next) => {
     .then(product => {
       return req.user.addToCart(product);
     })
-    .then(result => {
-      // console.log(result);
+    .then(() => {
+      return res.redirect('/cart');
     })
     .catch(err => console.log(err));
 
