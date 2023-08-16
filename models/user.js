@@ -104,7 +104,7 @@ class User {
 
     return db
       .collection('orders')
-      .insertOne(this.cart)
+      .insertOne({ ...this.cart, userId: this._id })
       .then(() => {
         this.cart = { items: [] };
         return db
@@ -114,6 +114,38 @@ class User {
             { $set: { cart: { items: [] } } }
           );
       });
+  }
+
+  getOrders() {
+    const db = getDb();
+
+    return db
+      .collection('orders')
+      .find({ userId: this._id })
+      .toArray()
+      .then(orders => {
+        return orders.map(order => {
+
+          const productIds = order.items.map(item => {
+            return item.productId;
+          });
+
+          return db
+            .collection('products')
+            .find({ _id: { $in: productIds } })
+            .toArray()
+            .then(products => {
+              return {
+                id: order._id,
+                items: products
+              };
+            });
+        });
+      })
+      .then(ordersPopulated => {
+        return Promise.all(ordersPopulated);
+      })
+      .catch(err => console.log(err));
   }
 
   static findById(userId) {
