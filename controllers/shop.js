@@ -1,6 +1,4 @@
 const Product = require('../models/product');
-const User = require('../models/user');
-// const Order = require('../models/order');
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -87,16 +85,6 @@ exports.getOrders = (req, res, next) => {
       });
     })
     .catch(err => console.log(err));
-
-  // .getOrders({ include: ['products'] })
-  // .then(orders => {
-  //   res.render('shop/orders', {
-  //     pageTitle: 'Orders',
-  //     path: '/orders',
-  //     orders: orders
-  //   });
-  // })
-  // .catch(err => console.log(err));
 }
 
 exports.postOrder = (req, res, next) => {

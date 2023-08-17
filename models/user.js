@@ -87,6 +87,20 @@ class User {
       .find({ _id: { $in: productIds } })
       .toArray()
       .then(products => {
+
+        if (productIds.length > products.length) {
+
+          const dbProducts = products.map(p => p._id.toString());
+          const cartProducts = productIds;
+
+          cartProducts.forEach(cartProduct => {
+            if (!dbProducts.includes(cartProduct.toString())){
+              console.log('apagar:', cartProduct); 
+            }
+          });
+
+        }
+
         return products.map(p => {
           return {
             ...p,
@@ -130,29 +144,10 @@ class User {
 
     return db
       .collection('orders')
-      .find({ userId: this._id })
+      .find({ 'user._id': new ObjectId(this._id) })
       .toArray()
       .then(orders => {
-        return orders.map(order => {
-
-          const productIds = order.items.map(item => {
-            return item.productId;
-          });
-
-          return db
-            .collection('products')
-            .find({ _id: { $in: productIds } })
-            .toArray()
-            .then(products => {
-              return {
-                id: order._id,
-                items: products
-              };
-            });
-        });
-      })
-      .then(ordersPopulated => {
-        return Promise.all(ordersPopulated);
+        return orders;
       })
       .catch(err => console.log(err));
   }
