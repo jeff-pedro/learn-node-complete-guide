@@ -5,8 +5,8 @@ class User {
   constructor(username, email, cart, id) {
     this.name = username;
     this.email = email;
-    this.cart = cart; // { items: [] }
-    this._id = id
+    this.cart = cart;
+    this._id = id;
   }
 
   save() {
@@ -87,18 +87,22 @@ class User {
       .find({ _id: { $in: productIds } })
       .toArray()
       .then(products => {
-
+        // Clean the Cart
         if (productIds.length > products.length) {
 
-          const dbProducts = products.map(p => p._id.toString());
-          const cartProducts = productIds;
+          const dbProductIds = products.map(p => p._id.toString());
+          const cartProductIds = productIds.map(p => p.toString());
 
-          cartProducts.forEach(cartProduct => {
-            if (!dbProducts.includes(cartProduct.toString())){
-              console.log('apagar:', cartProduct); 
+          cartProductIds.forEach(cartProductId => {
+            if (!dbProductIds.includes(cartProductId)) {
+
+              this.deleteItemFromCart(cartProductId)
+                .then(() => {
+                  console.log(`Product with id:${cartProductId} was removed from cart.`);
+                })
+                .catch(err => console.log(err));
             }
           });
-
         }
 
         return products.map(p => {
